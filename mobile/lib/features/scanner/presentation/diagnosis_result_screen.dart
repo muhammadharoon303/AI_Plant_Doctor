@@ -505,8 +505,75 @@ class DiagnosisResultScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
+
+            // PROMINENT SCAN ANOTHER LEAF ACTION CARD
+            Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF1B4332), Color(0xFF2D6A4F)],
+                ),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF1B4332).withValues(alpha: 0.35),
+                    blurRadius: 16,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  const Icon(Icons.center_focus_strong, size: 36, color: Colors.white),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Scan Another Leaf / New Image',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 4),
+                  const Text(
+                    'Capture or select a new plant leaf image for PyTorch AI diagnosis',
+                    style: TextStyle(fontSize: 12, color: Colors.white70),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton.icon(
+                    onPressed: onRescan,
+                    icon: const Icon(Icons.add_a_photo, color: Color(0xFF1B4332)),
+                    label: const Text(
+                      'Scan New Leaf',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1B4332),
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      minimumSize: const Size.fromHeight(48),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 32),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: onRescan,
+        icon: const Icon(Icons.center_focus_strong),
+        label: const Text('Scan Another Leaf'),
+        backgroundColor: Colors.green.shade800,
+        foregroundColor: Colors.white,
       ),
     );
   }
