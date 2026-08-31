@@ -6,10 +6,30 @@ import '../providers/locale_provider.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/custom_card.dart';
 import '../widgets/custom_button.dart';
+import '../core/constants/api_constants.dart';
 import 'auth/login_screen.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  final _serverUrlController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _serverUrlController.text = ApiConstants.baseUrl;
+  }
+
+  @override
+  void dispose() {
+    _serverUrlController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +97,54 @@ class SettingsScreen extends StatelessWidget {
                     },
                   ),
                 ],
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Server Connection & Standalone Mode Card
+          CustomCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.wifi_tethering, color: theme.colorScheme.primary),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Server Connection & Standalone AI',
+                      style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                const Divider(),
+                const Text(
+                  'When disconnected from USB laptop, the app uses Wi-Fi server connection or automatic On-Device Offline AI Diagnostics.',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: _serverUrlController,
+                  decoration: const InputDecoration(
+                    labelText: 'Backend Server URL',
+                    hintText: 'e.g. http://192.168.100.5:8000',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.dns),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                CustomButton(
+                  text: 'Save Server URL',
+                  icon: Icons.save,
+                  onPressed: () async {
+                    await ApiConstants.setCustomServerUrl(_serverUrlController.text);
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Server URL updated successfully')),
+                      );
+                    }
+                  },
+                ),
               ],
             ),
           ),
