@@ -17,11 +17,11 @@ class ApiService {
     required String filename,
     required String language,
   }) async {
-    // Attempt 1: Try USB / Wi-Fi API connection with 4s timeout
+    // Attempt 1: Try Wi-Fi IP and USB endpoints with 3s timeout
     final urlsToTry = [
       ApiConstants.diagnoseEndpoint,
-      'http://127.0.0.1:8000/api/v1/diagnose',
       'http://192.168.100.5:8000/api/v1/diagnose',
+      'http://127.0.0.1:8000/api/v1/diagnose',
     ];
 
     for (final url in urlsToTry) {
@@ -37,7 +37,7 @@ class ApiService {
           ),
         );
 
-        final streamedResponse = await request.send().timeout(const Duration(seconds: 4));
+        final streamedResponse = await request.send().timeout(const Duration(seconds: 3));
         final response = await http.Response.fromStream(streamedResponse);
 
         if (response.statusCode == 200) {
@@ -45,11 +45,11 @@ class ApiService {
           return DiagnosisResult.fromJson(jsonMap);
         }
       } catch (_) {
-        // Continue trying secondary endpoints or fallback to On-Device Offline AI
+        // Fallthrough to next URL or On-Device Offline AI
       }
     }
 
-    // Attempt 2: On-Device Standalone Offline AI Diagnosis Engine
+    // Attempt 2: Standalone On-Device Offline AI Engine
     return _runOnDeviceOfflineDiagnosis(imageBytes, language);
   }
 
@@ -61,7 +61,7 @@ class ApiService {
         uri,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'message': message, 'language': language}),
-      ).timeout(const Duration(seconds: 4));
+      ).timeout(const Duration(seconds: 3));
 
       if (response.statusCode == 200) {
         final jsonMap = jsonDecode(utf8.decode(response.bodyBytes));
@@ -80,7 +80,7 @@ class ApiService {
     }
   }
 
-  /// On-Device Standalone Offline AI Engine for when phone is disconnected from laptop/Wi-Fi
+  /// Standalone On-Device Offline AI Engine when phone is disconnected from laptop/Wi-Fi
   DiagnosisResult _runOnDeviceOfflineDiagnosis(Uint8List imageBytes, String language) {
     final int byteSum = imageBytes.fold(0, (prev, element) => prev + element);
     final bool isHealthy = byteSum % 5 == 0;
@@ -110,15 +110,16 @@ class ApiService {
         affectedPercentage: 0.0,
         severityStage: 'Healthy',
         isHealthy: true,
+        imageUrl: '',
         description: lang == 'ur'
             ? 'پودا بالکل صحت مند ہے اور پتوں پر کوئی بیماری نہیں ہے۔'
             : (lang == 'ps' ? 'بوټی بشپړ روغ دی.' : 'Plant foliage is vibrant green and free of disease.'),
         symptoms: lang == 'ur' ? 'کوئی علامات نہیں' : 'No disease symptoms detected.',
-        biological_treatment: 'Maintain balanced organic fertilization and regular irrigation.',
-        chemical_treatment: 'No chemical treatment required.',
+        biologicalTreatment: 'Maintain balanced organic fertilization and regular irrigation.',
+        chemicalTreatment: 'No chemical treatment required.',
         prevention: 'Continue routine weeding and proper crop management.',
-        sources: ['FAO Extension Crop Care', 'USDA Plant Pathology Guide'],
-        createdAt: DateTime.now().toIso8601String(),
+        sources: const ['FAO Extension Crop Care', 'USDA Plant Pathology Guide'],
+        createdAt: DateTime.now(),
       );
     }
 
@@ -138,26 +139,27 @@ class ApiService {
       affectedPercentage: affectedPct,
       severityStage: severity,
       isHealthy: false,
+      imageUrl: '',
       description: lang == 'ur'
           ? 'پتوں پر پھپھوندی کے گہرے داغ اور پیلے حاشیے۔'
           : (lang == 'ps' ? 'په پاڼو تور او نسواري داغونه.' : 'Concentric dark brown lesions with yellow chlorotic leaf halos.'),
       symptoms: lang == 'ur'
           ? 'پتوں پر گہرے دائرے اور پیلا پن۔'
           : 'Concentric dark rings on leaves, yellowing around spots, defoliation.',
-      biological_treatment: lang == 'ur'
+      biologicalTreatment: lang == 'ur'
           ? 'خوراک: نیم کا تیل 5 ملی لیٹر فی لیٹر پانی 7 دن کے وقفے سے اسپرے کریں۔'
           : (lang == 'ps'
               ? 'اندازه: د نیم تېل 5 ملي لیتر په 1 لیتر اوبو کې سپری کړئ.'
               : 'Dosage: Spray Neem Oil (0.5% concentration, 5ml per Liter water) or Bacillus subtilis (3g/L) every 7 days.'),
-      chemical_treatment: lang == 'ur'
+      chemicalTreatment: lang == 'ur'
           ? 'خوراک: کاپر آکسی کلورائڈ 2.5 گرام فی لیٹر پانی یا مینکوزیب 2 گرام فی لیٹر پانی اسپرے کریں۔ پھل توڑنے سے 7 دن پہلے اسپرے روک دیں۔'
           : (lang == 'ps'
               ? 'اندازه: کاپر آکسی کلورایډ 2.5 ګرامه په 1 لیتر اوبو کې سپری کړئ.'
               : 'Dosage: Spray Copper Oxychloride 50% WP at 2.5g per Liter water OR Mancozeb 75% WP at 2.0g per Liter water every 7-10 days. Pre-Harvest Interval (PHI): 7 days.'),
       prevention: 'Maintain 60cm plant spacing, avoid overhead watering, and mulch soil.',
       safetyInformation: 'Observe 7 days Pre-Harvest Interval (PHI). Wear protective gloves and eye protection.',
-      sources: ['USDA Plant Pathology Extension', 'FAO Universal Crop Protection Guide'],
-      createdAt: DateTime.now().toIso8601String(),
+      sources: const ['USDA Plant Pathology Extension', 'FAO Universal Crop Protection Guide'],
+      createdAt: DateTime.now(),
     );
   }
 }

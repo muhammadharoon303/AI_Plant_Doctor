@@ -9,7 +9,7 @@ class HistoryRepository {
   HistoryRepository({http.Client? client}) : _client = client ?? http.Client();
 
   String get _rootBaseUrl {
-    const base = ApiConstants.baseUrl;
+    final base = ApiConstants.baseUrl;
     return base.replaceAll('/api/v1', '');
   }
 
