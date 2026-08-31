@@ -1,6 +1,6 @@
 """
 Comprehensive Seed script for Multi-Crop Universal Disease Knowledge Base with Exact Dosages.
-Supports English, Urdu, and Pashto.
+Supports English, Urdu, and Pashto for all plant types.
 """
 
 INITIAL_DISEASES = [
@@ -165,66 +165,130 @@ INITIAL_DISEASES = [
         }
     },
     {
-        "disease_key": "Pepper,_bell___Bacterial_spot",
-        "crop_name": "Pepper (Bell)",
-        "scientific_name": "Xanthomonas euvesicatoria",
+        "disease_key": "Citrus_Orange___Haunglongbing_(Citrus_greening)",
+        "crop_name": "Citrus",
+        "scientific_name": "Candidatus Liberibacter asiaticus",
         "category": "Bacterial",
         "translations": {
             "en": {
-                "name": "Pepper Bacterial Spot",
-                "description": "Bacterial infection affecting pepper foliage and fruit causing dark water-soaked spots.",
-                "symptoms": "Small yellow-green leaf lesions turning dark brown with raised margins, leaf drop.",
-                "biological_treatment": "Dosage: Spray Copper Hydroxide + Mancozeb tank mix or Streptomyces lydicus bio-fungicide.",
-                "chemical_treatment": "Dosage: Spray Fixed Copper (2.5g per Liter water) mixed with Mancozeb (2.0g per Liter water) every 7 days.",
-                "prevention": "Use pathogen-free seed, soak seeds in hot water (50°C for 25 mins) before planting."
+                "name": "Citrus Greening (HLB)",
+                "description": "Bacterial disease spread by citrus psyllid causing mottled leaves and bitter small fruit.",
+                "symptoms": "Asymmetrical yellow mottling on leaves, green misshapen bitter fruit.",
+                "biological_treatment": "Dosage: Foliar spray of Micronutrients (Zinc + Manganese + Iron at 2g/L) + Neem Oil (5ml/L).",
+                "chemical_treatment": "Dosage: Control psyllid vector using Imidacloprid 17.8% SL (0.5ml per Liter water). PHI: 15 days.",
+                "prevention": "Control psyllid insect vector, remove infected trees, use certified clean citrus nursery stock."
             },
             "ur": {
-                "name": "شملہ مرچ کا بیکٹیریل اسپاٹ",
-                "description": "مرچ کے پتوں اور پھل پر بیکٹیریا کے گہرے داغ۔",
-                "symptoms": "پتوں پر چھوٹے سبز پیلے داغ جو بعد میں گہرے بھورے ہو جاتے ہیں اور پتے گرتے ہیں۔",
-                "biological_treatment": "خوراک: کاپر ہائیڈرو آکسائیڈ اور بائیو ایجنٹ کا اسپرے کریں۔",
-                "chemical_treatment": "خوراک: فکسڈ کاپر 2.5 گرام فی لیٹر + مینکوزیب 2 گرام فی لیٹر پانی ملا کر اسپرے کریں۔",
-                "prevention": "بیماری سے پاک بیج استعمال کریں اور گرم پانی سے بیج کا علاج کریں۔"
+                "name": "سترش اور لیموں کا گریننگ (Citrus Greening)",
+                "description": "لیموں اور کینو کے پودوں پر پتوں کا پیلا پڑنا اور پھل کا بدذائقہ ہونا۔",
+                "symptoms": "پتوں پر پیلے غیر متوازی دھبے، کینو کے پھل کا چھوٹا اور کڑوا رہ جانا۔",
+                "biological_treatment": "خوراک: زنک اور میگنیشیم کی کھاد 2 گرام + نیم کا تیل 5 ملی لیٹر فی لیٹر پانی۔",
+                "chemical_treatment": "خوراک: امائڈاکلوپرڈ 0.5 ملی لیٹر فی لیٹر پانی کا اسپرے کریں۔",
+                "prevention": "سائلا کیڑے کا خاتمہ کریں اور بیمار پودے تلف کریں۔"
             },
             "ps": {
-                "name": "د شملې مرچو باکتریایي ټکي",
-                "description": "د مرچو په پاڼو او میوه تاره باکتریایي نښې.",
-                "symptoms": "په پاڼو واړه شنه ژېړ داغونه.",
-                "biological_treatment": "اندازه: د مسو محلول سپری کړئ.",
-                "chemical_treatment": "اندازه: کاپر 2.5 ګرامه + مانکوزیب 2 ګرامه په 1 لیتر اوبو کې سپری کړئ.",
-                "prevention": "پاک او روغ بیجونه وکاروئ."
+                "name": "د مالټې او لیمو ګریننګ (Citrus Greening)",
+                "description": "د مالټو بوټي ژېړوي او میوه ترخوي.",
+                "symptoms": "په پاڼو ژېړې نښې او د میوې خرابېدل.",
+                "biological_treatment": "اندازه: مایکرو مغذي مواد 2 ګرامه + نیم تېل 5 ملی لیتر سپری کړئ.",
+                "chemical_treatment": "اندازه: امایډاکلوپرډ 0.5 ملي لیتر په 1 لیتر اوبو کې سپری کړئ.",
+                "prevention": "حشرات مړه کړئ او روغ بوټي وکرئ."
             }
         }
     },
     {
-        "disease_key": "Tomato___healthy",
-        "crop_name": "Tomato",
-        "scientific_name": "Solanum lycopersicum",
-        "category": "Healthy",
+        "disease_key": "Wheat___Leaf_Rust",
+        "crop_name": "Wheat",
+        "scientific_name": "Puccinia triticina",
+        "category": "Fungal",
         "translations": {
             "en": {
-                "name": "Healthy Plant Leaf",
-                "description": "Vibrant foliage with healthy green tissue and no disease symptoms.",
-                "symptoms": "Foliage is clear, green, and vigorous.",
-                "biological_treatment": "Dosage: Apply balanced organic compost tea or NPK 19-19-19 foliar spray at 3g per Liter water.",
-                "chemical_treatment": "No chemical pesticide required.",
-                "prevention": "Maintain regular weeding, balanced irrigation, and routine crop scouting."
+                "name": "Wheat Leaf Rust",
+                "description": "Fungal rust disease producing orange-red pustules on wheat foliage.",
+                "symptoms": "Small reddish-orange pustules scattered on upper leaf surfaces.",
+                "biological_treatment": "Dosage: Apply Trichoderma harzianum (5g per Liter water) bio-spray.",
+                "chemical_treatment": "Dosage: Spray Tebuconazole 250 EC at 1.0ml per Liter water OR Propiconazole 25% EC at 1.0ml/L. PHI: 30 days.",
+                "prevention": "Plant rust-resistant wheat varieties (e.g., Faisalabad-08, Markaz-19)."
             },
             "ur": {
-                "name": "صحت مند پودا",
-                "description": "پودا بالکل صحت مند ہے اور پتوں پر کوئی بیماری نہیں ہے۔",
-                "symptoms": "پتا شاداب اور تروتازہ ہے۔",
-                "biological_treatment": "خوراک: متوازن نامیاتی کھاد کا استعمال جاری رکھیں۔",
-                "chemical_treatment": "کسی کیمیائی اسپرے کی ضرورت نہیں ہے۔",
-                "prevention": "معمول کی دیکھ بھال جاری رکھیں۔"
+                "name": "گندم کی رتوعی / کنگی (Leaf Rust)",
+                "description": "گندم کے پتوں پر نارنجی اور سرخ رنگ کے دانے بنانے والی فنگس۔",
+                "symptoms": "پتوں کی اوپری سطح پر چمکدار سرخ اور نارنجی سفوف کے دھبے۔",
+                "biological_treatment": "خوراک: ٹرائیکوڈرما 5 گرام فی لیٹر پانی کا اسپرے کریں۔",
+                "chemical_treatment": "خوراک: ٹیبوکونازول 1 ملی لیٹر یا پروپیکونازول 1 ملی لیٹر فی لیٹر پانی کا اسپرے کریں۔",
+                "prevention": "کنگی سے محفوظ گندم کی قسم کاشت کریں۔"
             },
             "ps": {
-                "name": "روغ بوټی",
-                "description": "بوټی بشپړ روغ دی او هيڅ ناروغي نلري.",
-                "symptoms": "پاڼه سمه او شنه ده.",
-                "biological_treatment": "عضوي سرې وکاروئ.",
-                "chemical_treatment": "کیمیاوي درملو ته اړتیا نشته.",
-                "prevention": "د بوټي پاملرنې ته دوام ورکړئ."
+                "name": "د غنمو د پاڼو ژېړی (Leaf Rust)",
+                "description": "د غنمو په پاڼو نارنجي رنګې ټکې جوړوي.",
+                "symptoms": "په پاڼو سرخي او نارنجي سفوف.",
+                "biological_treatment": "اندازه: ټرایکوډرما 5 ګرامه په 1 لیتر اوبو کې وکاروئ.",
+                "chemical_treatment": "اندازه: ټیبوکونازول 1 ملي لیتر په 1 لیتر اوبو کې سپری کړئ.",
+                "prevention": "مقاوم غنم وکرئ."
+            }
+        }
+    },
+    {
+        "disease_key": "Cotton___Bacterial_Blight",
+        "crop_name": "Cotton",
+        "scientific_name": "Xanthomonas citri pv. malvacearum",
+        "category": "Bacterial",
+        "translations": {
+            "en": {
+                "name": "Cotton Bacterial Blight (Angular Leaf Spot)",
+                "description": "Bacterial infection causing angular water-soaked leaf spots and boll rot on cotton.",
+                "symptoms": "Angular water-soaked spots bounded by leaf veins, black arm lesions on petioles.",
+                "biological_treatment": "Dosage: Seed treatment with Pseudomonas fluorescens (10g per kg seed) + Neem cake soil application.",
+                "chemical_treatment": "Dosage: Spray Copper Oxychloride (2.5g per Liter water) + Streptomycin Sulphate (0.1g per Liter water).",
+                "prevention": "Delint seed with acid, use acid-delinted resistant cotton cultivars."
+            },
+            "ur": {
+                "name": "کپاس کا اینگولر لیف اسپاٹ / بلائٹ",
+                "description": "کپاس کے پتوں پر زاویہ دار پانی زدہ داغ پیدا کرنے والا بیکٹیریا۔",
+                "symptoms": "پتوں کی رگوں کے درمیان کونے دار سیاہ داغ اور گوبھی کا سڑنا۔",
+                "biological_treatment": "خوراک: بیج کا علاج سوڈوموناس 10 گرام فی کلو بیج سے کریں۔",
+                "chemical_treatment": "خوراک: کاپر آکسی کلورائڈ 2.5 گرام + اسٹریپٹومائسین 0.1 گرام فی لیٹر پانی۔",
+                "prevention": "تیزاب سے علاج شدہ کپاس کا بیج بوئیں۔"
+            },
+            "ps": {
+                "name": "د پنبې او پټیو باکتریایي ناروغي",
+                "description": "د پنبې پر پاڼو کونجي داغونه جوړوي.",
+                "symptoms": "په پاڼو زاویه‌دار اوبه لرونکي ټکي.",
+                "biological_treatment": "اندازه: سوډوموناس 10 ګرامه د یو کیلو تخم لپاره وکاروئ.",
+                "chemical_treatment": "اندازه: کاپر 2.5 ګرامه + سټریپټومایسین 0.1 ګرامه سپری کړئ.",
+                "prevention": "تصفیه شوی بیج وکرئ."
+            }
+        }
+    },
+    {
+        "disease_key": "Houseplant___Leaf_Spot",
+        "crop_name": "Houseplant",
+        "scientific_name": "Cercospora / Phyllosticta spp.",
+        "category": "Fungal",
+        "translations": {
+            "en": {
+                "name": "Houseplant & Ornamental Leaf Spot",
+                "description": "Fungal leaf spot disease affecting indoor houseplants, potted plants, and ornamentals.",
+                "symptoms": "Brown circular leaf spots with yellow margins, premature leaf leaf drop.",
+                "biological_treatment": "Dosage: Spray Neem Oil (5ml per Liter water) or Chamomile tea extract every 7 days.",
+                "chemical_treatment": "Dosage: Spray Chlorothalonil 75% WP (2.0g per Liter water) or Copper Soap (3ml/L).",
+                "prevention": "Avoid wetting foliage indoors, increase room ventilation, wiping leaves clean."
+            },
+            "ur": {
+                "name": "گھریلو پودوں کا لیف اسپاٹ",
+                "description": "گھروں کے انڈور اور سجاوٹی پودوں کے پتوں پر بھورے داغ۔",
+                "symptoms": "پتوں پر گول بھورے داغ اور پتوں کا وقت سے پہلے گرنا۔",
+                "biological_treatment": "خوراک: نیم کا تیل 5 ملی لیٹر فی لیٹر پانی ملا کر 7 دن میں اسپرے کریں۔",
+                "chemical_treatment": "خوراک: کلوروتھالونل 2 گرام فی لیٹر پانی ملا کر اسپرے کریں۔",
+                "prevention": "انڈور پودوں کے پتوں پر ڈائریکٹ پانی کھڑا نہ ہونے دیں۔"
+            },
+            "ps": {
+                "name": "د کورنیو بوټو پاڼو داغونه",
+                "description": "د انډور زېنتي بوټو پر پاڼو نسواري ټکي.",
+                "symptoms": "په پاڼو نسواري داغونه او توېدل.",
+                "biological_treatment": "اندازه: د نیم تېل 5 ملي لیتر په 1 لیتر اوبو کې سپری کړئ.",
+                "chemical_treatment": "اندازه: کلوروتالونیل 2 ګرامه په 1 لیتر اوبو کې سپری کړئ.",
+                "prevention": "د بوټو په پاڼو مستقیمې اوبه مه دوئ."
             }
         }
     }

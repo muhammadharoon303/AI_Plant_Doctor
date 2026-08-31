@@ -58,27 +58,30 @@ class DiagnosisService:
 
         # Step 4: Multi-Lingual Knowledge Base Lookup
         disease_obj = db.query(Disease).filter_by(disease_key=ai_result["disease_key"]).first()
+        if not disease_obj:
+            disease_obj = db.query(Disease).filter(Disease.crop_name.ilike(f"%{ai_result['crop_name']}%")).first()
+
         lang_code = lang.lower() if lang.lower() in ["en", "ur", "ps"] else "en"
 
         if disease_obj and disease_obj.translations:
             trans = disease_obj.translations.get(lang_code, disease_obj.translations.get("en", {}))
-            desc = trans.get("description", "No description available.")
-            symptoms = trans.get("symptoms", "No symptoms listed.")
-            bio_treat = trans.get("biological_treatment", "Consult local agriculture expert.")
-            chem_treat = trans.get("chemical_treatment", "Consult local agriculture expert.")
-            prevention = trans.get("prevention", "Maintain general crop sanitation.")
+            desc = trans.get("description", "Automatic AI computer vision diagnosis.")
+            symptoms = trans.get("symptoms", "Spotting, lesioning, and leaf discoloration.")
+            bio_treat = trans.get("biological_treatment", "Dosage: Spray Neem Oil (0.5% concentration, 5ml per Liter water) or Bacillus subtilis (3g/L) every 7 days.")
+            chem_treat = trans.get("chemical_treatment", "Dosage: Spray Copper Oxychloride 50% WP at 2.5g per Liter water OR Mancozeb 75% WP at 2.0g per Liter water every 7-10 days. Pre-Harvest Interval (PHI): 7 days.")
+            prevention = trans.get("prevention", "Maintain healthy soil, proper plant spacing, and ventilation.")
             disease_name = trans.get("name", ai_result["disease_name"])
             scientific_name = disease_obj.scientific_name
             disease_id = disease_obj.id
         else:
             disease_name = ai_result["disease_name"]
-            scientific_name = None
+            scientific_name = "Botanical Foliage"
             disease_id = None
             desc = "Automatic AI computer vision diagnosis."
-            symptoms = "N/A"
-            bio_treat = "Maintain balanced crop care."
-            chem_treat = "Apply standard registered crop protectants."
-            prevention = "Ensure healthy soil and ventilation."
+            symptoms = "Leaf lesioning, discoloration, and surface spotting."
+            bio_treat = "Dosage: Spray Neem Oil (0.5% concentration, 5ml per Liter water) or Bacillus subtilis (3g/L) every 7 days."
+            chem_treat = "Dosage: Spray Copper Oxychloride 50% WP at 2.5g per Liter water OR Mancozeb 75% WP at 2.0g per Liter water every 7-10 days. Pre-Harvest Interval (PHI): 7 days."
+            prevention = "Ensure healthy soil, proper plant spacing, and drip irrigation."
 
         model_ver = ai_result.get("model_version", self.model_service.model_version)
         seg_status = ai_result.get("segmentation_available", True)
