@@ -249,14 +249,14 @@ class TestBackendAPI(unittest.TestCase):
         self.assertIn("response", data1)
         self.assertIn("disclaimer", data1)
 
-        # 2. Ask unverified dosage question -> Triggers Safety Guard
+        # 2. Ask verified dosage question -> Returns Extension Dosage Guidelines
         res2 = self.client.post(
             "/api/v1/assistant",
             json={"message": "What is the exact grams per liter pesticide dose?", "language": "en"}
         )
         self.assertEqual(res2.status_code, 200)
         data2 = res2.json()
-        self.assertIn("cannot independently invent chemical pesticide dosages", data2["response"])
+        self.assertIn("Verified Extension Dosage Guidelines", data2["response"])
 
     def test_multilingual_knowledge_and_safety_preservation(self):
         # 1. Fetch Urdu Knowledge Base

@@ -142,9 +142,29 @@ class PlantAssistantRAGEngine:
                     f"3. Safety Guidelines: {safety_info}"
                 )
 
-        # Q4: Ask for exact unverified pesticide dosage or custom diagnosis without photo -> Step 4: Safety Validation Trigger
-        elif any(w in msg_lower for w in ["dose", "grams per liter", "milliliters", "recipe"]):
-            reply = SAFETY_INVENTED_DOSE_GUARD
+        # Q4: Ask for exact dosages -> Return verified knowledge base dosage guidelines
+        elif any(w in msg_lower for w in ["dose", "dosage", "how much", "grams", "ml", "اسپرے", "مقدار", "اندازه"]):
+            if lang_code == "ur":
+                reply = (
+                    f"تصدیق شدہ زرعی کھاد و ادویات کی خوراک برائے {crop_name} ({disease_name}):\n\n"
+                    f"🌿 نامیاتی خوراک: {bio_treat}\n"
+                    f"🧪 کیمیائی خوراک: {chem_treat}\n"
+                    f"⚠️ حفاظتی وقفہ (PHI): {safety_info}"
+                )
+            elif lang_code == "ps":
+                reply = (
+                    f"د {crop_name} ({disease_name}) لپاره د تایید شویو درملو اندازه:\n\n"
+                    f"🌿 بیولوژیکي اندازه: {bio_treat}\n"
+                    f"🧪 کیمیاوي اندازه: {chem_treat}\n"
+                    f"⚠️ د خوندیتوب لارښوونه: {safety_info}"
+                )
+            else:
+                reply = (
+                    f"Verified Extension Dosage Guidelines for {crop_name} ({disease_name}):\n\n"
+                    f"🌿 Biological / Organic Dosage: {bio_treat}\n\n"
+                    f"🧪 Chemical Protectant Dosage: {chem_treat}\n\n"
+                    f"⚠️ Harvest Safety (PHI & PPE): {safety_info}"
+                )
 
         else:
             # Default General RAG Reply

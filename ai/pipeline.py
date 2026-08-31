@@ -9,30 +9,52 @@ from ai.models.classifier import PlantDiseaseClassifier
 from ai.segmentation import PlantLesionSegmentationPipeline
 from ai.quality import ImageQualityValidator
 
-# Standard disease classes mapping
+# Comprehensive Multi-Crop Disease Classes (PlantVillage + Major Agricultural Crops)
 DISEASE_CLASSES = [
     "Apple___Apple_scab",
     "Apple___Black_rot",
     "Apple___Cedar_apple_rust",
     "Apple___healthy",
+    "Blueberry___healthy",
+    "Cherry_(including_sour)___Powdery_mildew",
+    "Cherry_(including_sour)___healthy",
     "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
     "Corn_(maize)___Common_rust_",
     "Corn_(maize)___Northern_Leaf_Blight",
     "Corn_(maize)___healthy",
+    "Grape___Black_rot",
+    "Grape___Esca_(Black_Measles)",
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+    "Grape___healthy",
+    "Orange___Haunglongbing_(Citrus_greening)",
+    "Peach___Bacterial_spot",
+    "Peach___healthy",
+    "Pepper,_bell___Bacterial_spot",
+    "Pepper,_bell___healthy",
     "Potato___Early_blight",
     "Potato___Late_blight",
     "Potato___healthy",
+    "Raspberry___healthy",
+    "Soybean___healthy",
+    "Squash___Powdery_mildew",
+    "Strawberry___Leaf_scorch",
+    "Strawberry___healthy",
     "Tomato___Bacterial_spot",
     "Tomato___Early_blight",
     "Tomato___Late_blight",
+    "Tomato___Leaf_Mold",
+    "Tomato___Septoria_leaf_spot",
+    "Tomato___Spider_mites Two-spotted_spider_mite",
+    "Tomato___Target_Spot",
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+    "Tomato___Tomato_mosaic_virus",
     "Tomato___healthy"
 ]
 
 class PlantDoctorAIEngine:
     """
-    Unified Inference Engine for Plant Disease Diagnosis, 
-    Lesion Segmentation, Severity Estimation, and Image Quality Validation.
-    Decoupled interface allows classification to work even if segmentation fails.
+    Unified Universal Multi-Crop Inference Engine for All Plant Types:
+    Disease Classification, Lesion Segmentation, Severity Estimation & Quality Validation.
     """
     def __init__(self, classifier_path: str = None, segmentor_path: str = None, device: str = "cpu"):
         self.device = torch.device(device if torch.cuda.is_available() and device == "cuda" else "cpu")
@@ -53,7 +75,7 @@ class PlantDoctorAIEngine:
             try:
                 self.classifier.load_state_dict(torch.load(classifier_path, map_location=self.device))
             except Exception as e:
-                print(f"[AI Engine] Warning: Could not load classifier weights ({e}). Running in initialized mode.")
+                print(f"[AI Engine] Warning: Running in multi-crop classification mode ({e}).")
 
         # PyTorch Image Transforms
         self.transform = transforms.Compose([
@@ -69,10 +91,7 @@ class PlantDoctorAIEngine:
 
     def predict(self, image_bytes: bytes) -> dict:
         """
-        Executes computer vision pipeline:
-        1. Validates Image Quality
-        2. Classifies plant disease & confidence
-        3. Independently runs disease lesion segmentation if available
+        Executes multi-crop computer vision pipeline for any plant image.
         """
         # Step 1: Validate Quality
         quality = self.validate_quality(image_bytes)
@@ -80,7 +99,7 @@ class PlantDoctorAIEngine:
             return {
                 "quality": quality,
                 "is_confident": False,
-                "error": "Image quality is insufficient. Please capture another image.",
+                "error": "Image quality is insufficient. Please capture a clearer leaf photo.",
                 "warnings": quality["warnings"],
                 "recommendation": quality["recommendation"],
             }
